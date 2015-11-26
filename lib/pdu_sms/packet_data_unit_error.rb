@@ -1,0 +1,2 @@
+class PacketDataUnitError < StandardError
+end
