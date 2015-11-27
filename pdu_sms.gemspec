@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["schnack.desu@gmail.com"]
   spec.license       = "MTI"
   spec.summary       = %q{PDU SMS coding and decoding library}
-  spec.description   = %q{Look README.md for details}
+  spec.description   = %q{PDU SMS coding and decoding library}
   spec.homepage      = "https://github.com/schnack/pdu_sms"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
