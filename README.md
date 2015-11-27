@@ -18,8 +18,11 @@ Or install it yourself as:
     $ gem install pdu_sms
 
 ## Usage
-
+    
+    require 'pdu_sms'
+    
     include PduSms
+    
     # MS(Mobile Station) => SC(SMS Center)
     encode_pdu_ms = PacketDataUnit.encode_ms('+71234567890', 'Hello!!!')
     encode_pdu_ms[0].get_hex            #=> "0001000b911732547698F0000008C8329BFD0E8542"
