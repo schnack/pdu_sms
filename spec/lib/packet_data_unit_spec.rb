@@ -23,7 +23,7 @@ describe PacketDataUnit do
     end
     it 'Проверяем объект класса DestinationAddress' do
       expect(@pdu.da).to be_an_instance_of(DestinationAddress)
-      expect(@pdu.da.get_hex).to eq('0b911732547698F0')
+      expect(@pdu.da.get_hex).to eq('0B911732547698F0')
     end
     it 'Проверяем объект класса ProtocolIdentifier' do
       expect(@pdu.pid).to be_an_instance_of(ProtocolIdentifier)
@@ -112,7 +112,7 @@ describe PacketDataUnit do
     end
     it 'Проверяем объект класса OriginatingAddress' do
       expect(@pdu.oa).to be_an_instance_of(OriginatingAddress)
-      expect(@pdu.oa.get_hex).to eq('0b911732547698F0')
+      expect(@pdu.oa.get_hex).to eq('0B911732547698F0')
     end
     it 'Проверяем объект класса ProtocolIdentifier' do
       expect(@pdu.pid).to be_an_instance_of(ProtocolIdentifier)
@@ -187,10 +187,10 @@ describe PacketDataUnit do
 
   describe '.get_hex' do
     it 'Получаем Pdu' do
-      expect(PacketDataUnit.encode_ms('+79123456789', 'Привет!!!')[0].get_hex).to eq('0001000b919721436587F9000812041F04400438043204350442002100210021')
+      expect(PacketDataUnit.encode_ms('+79123456789', 'Привет!!!')[0].get_hex).to eq('0001000B919721436587F9000812041F04400438043204350442002100210021')
     end
     it 'Получаем Pdu' do
-      expect(PacketDataUnit.encode_sc('+79123456789','beeline', 'Привет!!!', scts:1)[0].get_hex).to eq('07919721436587F9000cd0E272999D76970100080710103000102112041F04400438043204350442002100210021')
+      expect(PacketDataUnit.encode_sc('+79123456789','beeline', 'Привет!!!', scts:1)[0].get_hex).to eq('07919721436587F9000CD0E272999D76970100080710103000102112041F04400438043204350442002100210021')
     end
   end
 

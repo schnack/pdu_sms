@@ -18,7 +18,7 @@ module PduSms
     end
 
     def encode_ucs2(message)
-      message.chars.to_a.collect {|char| "%04X" % char.ord}.join
+      message.chars.to_a.collect {|char| '%04X' % char.ord}.join
     end
 
     def is_7bit?(message)
@@ -38,7 +38,7 @@ module PduSms
           end
         end
       end
-      string_encode.collect {|x| '%02x' % x.to_i(2)}.join.upcase
+      string_encode.collect {|x| '%02X' % x.to_i(2)}.join.upcase
     end
 
     def decode_7bit(string)
@@ -55,7 +55,7 @@ module PduSms
     end
 
     def encode_8bit(string)
-      string.chars.to_a.collect {|char| '%02x' % char.ord }.join
+      string.chars.to_a.collect {|char| '%02X' % char.ord }.join
     end
 
     def decode_8bit(string)

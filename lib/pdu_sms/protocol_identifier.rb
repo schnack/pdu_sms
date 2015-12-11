@@ -44,7 +44,7 @@ module PduSms
     end
 
     def get_hex
-      '%02x' % [@pid]
+      '%02X' % [@pid]
     end
 
     def get_pid

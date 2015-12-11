@@ -56,16 +56,16 @@ describe UserDataLength do
       expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello', ALPHABET_8BIT)[0])).to eq('05')
     end
     it '16bit' do
-      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello', ALPHABET_16BIT)[0])).to eq('0a')
+      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello', ALPHABET_16BIT)[0])).to eq('0A')
     end
     it '7bit long_sms' do
-      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_7BIT)[0])).to eq('a0')
+      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_7BIT)[0])).to eq('A0')
     end
     it '8bit long_sms' do
-      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_8BIT)[0])).to eq('8b')
+      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_8BIT)[0])).to eq('8B')
     end
     it '16bit long_sms' do
-      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_16BIT)[0])).to eq('8c')
+      expect(UserDataLength.new(:encode_ms, UserData.encode_ms('hello')[0]).send(:_count_message, UserData.encode_ms('hello'*40, ALPHABET_16BIT)[0])).to eq('8C')
     end
   end
 

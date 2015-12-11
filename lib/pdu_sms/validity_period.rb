@@ -137,11 +137,11 @@ module PduSms
       time = Time.at(timestamp).to_datetime
       date_time = time.strftime('%y%m%d%H%M%S')
       if time.strftime('%z').to_i >= 0
-        date_time += ('%02x' % (4 * time.strftime('%z')[0..2].to_i + time.strftime('%z')[3..4].to_i / 15).to_s.to_i(16))
+        date_time += ('%02X' % (4 * time.strftime('%z')[0..2].to_i + time.strftime('%z')[3..4].to_i / 15).to_s.to_i(16))
       else
         tz = '%08b' % ((4 * time.strftime('%z')[0..2].to_i.abs + time.strftime('%z')[3..4].to_i / 15).to_s.to_i(16))
         tz[0] = ?1
-        date_time += '%02x' % tz.to_i(2)
+        date_time += '%02X' % tz.to_i(2)
       end
       @vp = encode_bcd(date_time)
     end

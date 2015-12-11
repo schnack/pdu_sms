@@ -113,7 +113,7 @@ module PduSms
     end
 
     def get_hex
-      '%02x' % (get_bit0 << get_compressed << get_message_class_trigger << get_alphabet << get_message_class).to_i(2)
+      '%02X' % (get_bit0 << get_compressed << get_message_class_trigger << get_alphabet << get_message_class).to_i(2)
     end
 
   end

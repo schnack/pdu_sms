@@ -152,13 +152,13 @@ describe UserData do
   describe '.get_hex' do
     it 'Получаем одиночное без заголовков' do
       expect(UserData.new('Hello!!!', ALPHABET_7BIT).get_hex).to eq('C8329BFD0E8542')
-      expect(UserData.new('Hello!!!', ALPHABET_8BIT).get_hex).to eq('48656c6c6f212121')
+      expect(UserData.new('Hello!!!', ALPHABET_8BIT).get_hex).to eq('48656C6C6F212121')
       expect(UserData.new('Hello!!!', ALPHABET_16BIT).get_hex).to eq('00480065006C006C006F002100210021')
     end
     it 'Получаем а теперь группа сообщений с заголовками' do
-      expect(UserData.new('Hello!!!', ALPHABET_7BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('060804007b0201C8329BFD0E8542')
-      expect(UserData.new('Hello!!!', ALPHABET_8BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('060804007b020148656c6c6f212121')
-      expect(UserData.new('Hello!!!', ALPHABET_16BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('0500037b020100480065006C006C006F002100210021')
+      expect(UserData.new('Hello!!!', ALPHABET_7BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('060804007B0201C8329BFD0E8542')
+      expect(UserData.new('Hello!!!', ALPHABET_8BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('060804007B020148656C6C6F212121')
+      expect(UserData.new('Hello!!!', ALPHABET_16BIT, ied1:123, ied2:2, ied3:1).get_hex).to eq('0500037B020100480065006C006C006F002100210021')
     end
   end
 
@@ -253,9 +253,9 @@ describe UserData do
   describe '.get_ied1' do
     it 'Получаем все значения' do
       expect(UserData.new('Hello',ALPHABET_7BIT).get_ied1).to eq('')
-      expect(UserData.new('Hello',ALPHABET_7BIT, ied1:65535, ied2:2, ied3:1).get_ied1).to eq('ffff')
-      expect(UserData.new('Hello',ALPHABET_8BIT, ied1:65535, ied2:2, ied3:1).get_ied1).to eq('ffff')
-      expect(UserData.new('Hello',ALPHABET_16BIT, ied1:255, ied2:2, ied3:1).get_ied1).to eq('ff')
+      expect(UserData.new('Hello',ALPHABET_7BIT, ied1:65535, ied2:2, ied3:1).get_ied1).to eq('FFFF')
+      expect(UserData.new('Hello',ALPHABET_8BIT, ied1:65535, ied2:2, ied3:1).get_ied1).to eq('FFFF')
+      expect(UserData.new('Hello',ALPHABET_16BIT, ied1:255, ied2:2, ied3:1).get_ied1).to eq('FF')
     end
   end
 

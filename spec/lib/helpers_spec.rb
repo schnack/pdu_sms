@@ -71,7 +71,7 @@ describe PduSms::Helpers do
 
   describe '.encode_8bit' do
     it 'Кодирование строки в 8бит формат' do
-      expect(encode_8bit('Hello!!!')).to eq('48656c6c6f212121')
+      expect(encode_8bit('Hello!!!')).to eq('48656C6C6F212121')
     end
   end
 

@@ -139,36 +139,36 @@ module PduSms
     def get_ied1
       return '' unless @ied1
       case @coding
-        when ALPHABET_7BIT then '%04x' % @ied1
-        when ALPHABET_8BIT then '%04x' % @ied1
-        when ALPHABET_16BIT then '%02x' % @ied1
+        when ALPHABET_7BIT then '%04X' % @ied1
+        when ALPHABET_8BIT then '%04X' % @ied1
+        when ALPHABET_16BIT then '%02X' % @ied1
         else raise 'unknown encoding'
       end
     end
 
     def get_ied2
       return '' unless @ied2
-      '%02x' % @ied2
+      '%02X' % @ied2
     end
 
     def get_ied3
       return '' unless @ied3
-      '%02x' % @ied3
+      '%02X' % @ied3
     end
 
     def get_udhl
       return '' unless @udhl
-      '%02x' % @udhl
+      '%02X' % @udhl
     end
 
     def get_iei
       return '' unless @iei
-      '%02x' % @iei
+      '%02X' % @iei
     end
 
     def get_iedl
       return '' unless @iedl
-      '%02x' % @iedl
+      '%02X' % @iedl
     end
 
     def get_hex

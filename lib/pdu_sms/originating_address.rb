@@ -48,9 +48,9 @@ module PduSms
 
     def _address_length
       if @number_plan_identifier == ID_ALPHANUMERIC
-        '%02x' % (@phone_number.length * 0.875 * 2).round
+        '%02X' % (@phone_number.length * 0.875 * 2).round
       else
-        '%02x' %  @phone_number.length
+        '%02X' %  @phone_number.length
       end
     end
   end

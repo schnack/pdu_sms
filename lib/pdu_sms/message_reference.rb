@@ -30,7 +30,7 @@ module PduSms
     end
 
     def get_hex
-      '%02x' % @mr
+      '%02X' % @mr
     end
 
     def get_mr

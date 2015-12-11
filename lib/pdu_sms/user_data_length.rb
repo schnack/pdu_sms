@@ -73,7 +73,7 @@ module PduSms
         else
           raise ArgumentError, 'The "ud" is incorrect'
       end
-      '%02x' % count_sms
+      '%02X' % count_sms
     end
 
   end

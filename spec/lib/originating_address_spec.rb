@@ -22,13 +22,13 @@ describe OriginatingAddress do
 
   describe '.encode_sc' do
     it 'Кодируем телефонный номер в международном формате' do
-      expect(OriginatingAddress.encode_sc('+79101199508').get_hex).to eq('0b919701119905F8')
+      expect(OriginatingAddress.encode_sc('+79101199508').get_hex).to eq('0B919701119905F8')
     end
     it 'Кодируем номер в местном формате' do
-      expect(OriginatingAddress.encode_sc('79101199508',ID_UNKNOWN).get_hex).to eq('0b819701119905F8')
+      expect(OriginatingAddress.encode_sc('79101199508',ID_UNKNOWN).get_hex).to eq('0B819701119905F8')
     end
     it 'Кодируем тестовый номер' do
-      expect(OriginatingAddress.encode_sc('Tele2',ID_ALPHANUMERIC, TP_UNKNOWN).get_hex).to eq('09d0D432BB2C03')
+      expect(OriginatingAddress.encode_sc('Tele2',ID_ALPHANUMERIC, TP_UNKNOWN).get_hex).to eq('09D0D432BB2C03')
     end
   end
 

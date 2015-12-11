@@ -114,7 +114,7 @@ module PduSms
     end
 
     def _type_of_address_hex
-      '%02x' % ('1%03b%04b' % [@number_plan_identifier, @type_number]).to_i(2)
+      '%02X' % ('1%03b%04b' % [@number_plan_identifier, @type_number]).to_i(2)
     end
 
   end

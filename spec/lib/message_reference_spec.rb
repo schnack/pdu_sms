@@ -38,7 +38,7 @@ describe MessageReference do
   describe '.get_hex' do
     it 'Получаем PDU  строку' do
       expect(MessageReference.encode_ms(0).get_hex).to eq('00')
-      expect(MessageReference.encode_ms(255).get_hex).to eq('ff')
+      expect(MessageReference.encode_ms(255).get_hex).to eq('FF')
     end
   end
 

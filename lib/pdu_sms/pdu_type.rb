@@ -169,9 +169,9 @@ module PduSms
 
     def get_hex
       if message_type_indicator_out?
-        '%02x' % [('' << get_reply_path << get_user_data_header_included << get_status_report_request << get_validity_period_format << get_reject_duplicates << get_message_type_indicator).to_i(2)]
+        '%02X' % [('' << get_reply_path << get_user_data_header_included << get_status_report_request << get_validity_period_format << get_reject_duplicates << get_message_type_indicator).to_i(2)]
       elsif message_type_indicator_in?
-        '%02x' % [('' << get_reply_path << get_user_data_header_included << get_status_report_indication << '00' << get_more_messages_to_send << get_message_type_indicator).to_i(2)]
+        '%02X' % [('' << get_reply_path << get_user_data_header_included << get_status_report_indication << '00' << get_more_messages_to_send << get_message_type_indicator).to_i(2)]
       end
     end
 

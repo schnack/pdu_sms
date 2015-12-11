@@ -50,7 +50,7 @@ module PduSms
     end
 
     def get_hex
-      return '%02x' % 0x00 unless _check_phone?
+      return '%02X' % 0x00 unless _check_phone?
       '%s%s' % [_address_length_hex, _get_hex_type_and_phone]
     end
 
@@ -66,7 +66,7 @@ module PduSms
     end
 
     def _address_length_hex
-      '%02x' % (_get_hex_type_and_phone.size / 2).to_s.to_i(16)
+      '%02X' % (_get_hex_type_and_phone.size / 2).to_s.to_i(16)
     end
 
   end

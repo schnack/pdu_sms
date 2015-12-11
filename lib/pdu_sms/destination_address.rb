@@ -47,9 +47,9 @@ module PduSms
 
     def _address_length
       if @phone_number[0] == ?+
-        '%02x' % (@phone_number.length - 1)
+        '%02X' % (@phone_number.length - 1)
       else
-        '%02x' % @phone_number.length
+        '%02X' % @phone_number.length
       end
     end
 

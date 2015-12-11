@@ -25,23 +25,23 @@ Or install it yourself as:
     
     # MS(Mobile Station) => SC(SMS Center)
     encode_pdu_ms = PacketDataUnit.encode_ms('+71234567890', 'Hello!!!')
-    encode_pdu_ms[0].get_hex            #=> "0001000b911732547698F0000008C8329BFD0E8542"
+    encode_pdu_ms[0].get_hex            #=> "0001000B911732547698F0000008C8329BFD0E8542"
     encode_pdu_ms[0].get_message        #=> "Hello!!!"
     encode_pdu_ms[0].get_phone_number   #=> "+71234567890"
     
-    decode_pdu_ms = PacketDataUnit.decode('0001000b911732547698F0000008C8329BFD0E8542')
-    decode_pdu_ms.get_hex               #=> "0001000b911732547698F0000008C8329BFD0E8542"
+    decode_pdu_ms = PacketDataUnit.decode('0001000B911732547698F0000008C8329BFD0E8542')
+    decode_pdu_ms.get_hex               #=> "0001000B911732547698F0000008C8329BFD0E8542"
     decode_pdu_ms.get_message           #=> "Hello!!!"
     decode_pdu_ms.get_phone_number      #=> "+71234567890"
     
     # SC => MS
     encode_pdu_sc = PacketDataUnit.encode_sc('+71234567890', 'Tele2', 'hello!!!')
-    encode_pdu_sc[0].get_hex            #=> "07911732547698F00009d0D432BB2C0300005111713115142108E8329BFD0E8542"
+    encode_pdu_sc[0].get_hex            #=> "07911732547698F00009D0D432BB2C0300005111713115142108E8329BFD0E8542"
     encode_pdu_sc[0].get_message        #=> "hello!!!"
     encode_pdu_sc[0].get_phone_number   #=> "Tele2"
     
-    decode_pdu_sc = PacketDataUnit.decode('07911732547698F00009d0D432BB2C0300005111713115142108E8329BFD0E8542')
-    decode_pdu_sc.get_hex               #=> "07911732547698F00009d0D432BB2C0300005111713115142108E8329BFD0E8542"
+    decode_pdu_sc = PacketDataUnit.decode('07911732547698F00009D0D432BB2C0300005111713115142108E8329BFD0E8542')
+    decode_pdu_sc.get_hex               #=> "07911732547698F00009D0D432BB2C0300005111713115142108E8329BFD0E8542"
     decode_pdu_sc.get_message           #=> "hello!!!"
     decode_pdu_sc.get_phone_number      #=> "Tele2"
     

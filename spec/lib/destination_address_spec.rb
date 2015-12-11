@@ -37,16 +37,16 @@ describe DestinationAddress do
 
   describe '.get_hex' do
     it 'Получаем PDU кодированную строку' do
-      expect(DestinationAddress.encode_ms('+79851488398').get_hex).to eq('0b919758418893F8')
+      expect(DestinationAddress.encode_ms('+79851488398').get_hex).to eq('0B919758418893F8')
     end
   end
 
   describe '._address_length' do
     it 'Длина номера в международном формате' do
-      expect(DestinationAddress.encode_ms('+71234567890').send(:_address_length)).to eq('0b')
+      expect(DestinationAddress.encode_ms('+71234567890').send(:_address_length)).to eq('0B')
     end
     it 'Длина номера в местном формате ' do
-      expect(DestinationAddress.encode_ms('81234567890').send(:_address_length)).to eq('0b')
+      expect(DestinationAddress.encode_ms('81234567890').send(:_address_length)).to eq('0B')
     end
   end
 
