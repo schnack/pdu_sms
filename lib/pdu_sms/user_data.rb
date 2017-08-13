@@ -1,6 +1,8 @@
 module PduSms
   class UserData
 
+    include Helpers
+
     def initialize(message, coding, ied1: false, ied2: false, ied3: false, udhl: false, iei: false, iedl: false)
       @coding = _check_coding coding
       @message = _check_message message, coding, ied1

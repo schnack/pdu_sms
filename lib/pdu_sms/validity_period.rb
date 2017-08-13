@@ -3,6 +3,8 @@ require 'date'
 module PduSms
   class ValidityPeriod
 
+    include Helpers
+
     def initialize(type, times, type_time=false)
       @type_time = type_time
       return @vp = '' unless times

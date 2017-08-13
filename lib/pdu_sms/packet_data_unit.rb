@@ -121,6 +121,24 @@ module PduSms
       end
     end
 
+    def length
+      pdu = ''
+      if @pdu_type.message_type_indicator_out?
+        pdu << @pdu_type.get_hex << @mr.get_hex << @da.get_hex << @pid.get_hex << @dcs.get_hex << @vp.get_hex << @udl.get_hex << @ud.get_hex
+      elsif @pdu_type.message_type_indicator_in?
+        pdu << @pdu_type.get_hex << @oa.get_hex << @pid.get_hex << @dcs.get_hex << @scts.get_hex << @udl.get_hex << @ud.get_hex
+      else
+        raise PacketDataUnitError, 'oops SMS-SUBMIT not supported by this version of the library'
+      end
+
+      size = pdu.to_i(16).to_s(2).length
+      if (size % 8).zero?
+        size / 8
+      else
+        (size / 8) + 1
+      end
+    end
+
   end
 end
 

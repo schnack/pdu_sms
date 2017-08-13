@@ -2,6 +2,8 @@ module PduSms
 
   class Phone
 
+    include Helpers
+
     attr_reader(:number_plan_identifier, :type_number)
 
     @phone_number = ''

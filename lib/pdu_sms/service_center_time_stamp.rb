@@ -4,6 +4,8 @@ module PduSms
 
   class ServiceCenterTimeStamp
 
+    include Helpers
+
     def initialize(type, data)
       if type == :encode_sc
         @scts = _absolute_timestamp data

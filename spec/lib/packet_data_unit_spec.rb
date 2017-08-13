@@ -10,6 +10,9 @@ describe PacketDataUnit do
       @pdu = PacketDataUnit.encode_ms('+71234567890', 'test', coding:2)[0]
     end
     it 'Проверяем объект класса ServiceCenterAddress' do
+      expect(@pdu.length).to eq(21)
+    end
+    it 'Проверяем объект класса ServiceCenterAddress' do
       expect(@pdu.sca).to be_an_instance_of(ServiceCenterAddress)
       expect(@pdu.sca.get_hex).to eq('00')
     end
