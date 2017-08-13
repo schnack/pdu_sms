@@ -4,8 +4,6 @@ module PduSms
 
   class ServiceCenterTimeStamp
 
-    include Helpers
-
     def initialize(type, data)
       if type == :encode_sc
         @scts = _absolute_timestamp data
@@ -57,11 +55,11 @@ module PduSms
         tz[0] = ?1
         date_time += '%02X' % tz.to_i(2)
       end
-      @scts = encode_bcd(date_time)
+      @scts = Helpers.encode_bcd(date_time)
     end
 
     def _absolute_pdu(vp)
-      ss = decode_bcd(vp)
+      ss = Helpers.decode_bcd(vp)
       year, month, day, hours, minutes, seconds, zone_quarter = Time.now.year.to_s[0..1] + ss[0..1], ss[2..3], ss[4..5], ss[6..7], ss[8..9], ss[10..11], ss[12..13]
       tz = '%08b' % zone_quarter
       if tz[0] == '1'

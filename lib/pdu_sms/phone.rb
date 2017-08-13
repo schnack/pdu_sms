@@ -2,8 +2,6 @@ module PduSms
 
   class Phone
 
-    include Helpers
-
     attr_reader(:number_plan_identifier, :type_number)
 
     @phone_number = ''
@@ -27,7 +25,7 @@ module PduSms
       elsif /^\d+$/ === phone_number
         @number_plan_identifier = ID_UNKNOWN
         @type_number = TP_ISDN
-      elsif is_7bit?(phone_number)
+      elsif Helpers.is_7bit?(phone_number)
         @number_plan_identifier = ID_ALPHANUMERIC
         @type_number = TP_UNKNOWN
       else
@@ -38,7 +36,7 @@ module PduSms
 
     def _check_phone?
       if @number_plan_identifier == ID_ALPHANUMERIC
-        is_7bit?(@phone_number)
+        Helpers.is_7bit?(@phone_number)
       else
         /^\d+$/ === @phone_number
       end
@@ -46,7 +44,7 @@ module PduSms
 
     def _get_hex_type_and_phone
       if @number_plan_identifier == ID_ALPHANUMERIC
-        '%s%s' % [_type_of_address_hex, encode_7bit(@phone_number)]
+        '%s%s' % [_type_of_address_hex, Helpers.encode_7bit(@phone_number)]
       else
         '%s%s' % [_type_of_address_hex, _convert_to_bcd_format]
       end
@@ -95,7 +93,7 @@ module PduSms
       if clear_phone.length % 2 != 0
         clear_phone += 'F'
       end
-      encode_bcd(clear_phone)
+      Helpers.encode_bcd(clear_phone)
     end
 
     def _convert_to_normal_format(bcd)
@@ -108,9 +106,9 @@ module PduSms
       @number_plan_identifier = number_type[1..3].to_i(2)
       @type_number = number_type[4..7].to_i(2)
       if @number_plan_identifier == ID_ALPHANUMERIC
-        @phone_number = decode_7bit(bcd[2..-1])
+        @phone_number = Helpers.decode_7bit(bcd[2..-1])
       else
-        @phone_number = decode_bcd(bcd[2..-1])[/[fF]$/] ? decode_bcd(bcd[2..-1])[0..-2] : decode_bcd(bcd[2..-1])
+        @phone_number = Helpers.decode_bcd(bcd[2..-1])[/[fF]$/] ? Helpers.decode_bcd(bcd[2..-1])[0..-2] : Helpers.decode_bcd(bcd[2..-1])
       end
       self
     end

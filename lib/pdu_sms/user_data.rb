@@ -1,8 +1,6 @@
 module PduSms
   class UserData
 
-    include Helpers
-
     def initialize(message, coding, ied1: false, ied2: false, ied3: false, udhl: false, iei: false, iedl: false)
       @coding = _check_coding coding
       @message = _check_message message, coding, ied1
@@ -16,7 +14,7 @@ module PduSms
 
     def UserData.encode_ms(message, coding=:auto)
       message_array = [message]
-      coding = is_7bit?(message) ? ALPHABET_7BIT : ALPHABET_16BIT if coding == :auto
+      coding = Helpers.is_7bit?(message) ? ALPHABET_7BIT : ALPHABET_16BIT if coding == :auto
       if coding == ALPHABET_7BIT
         if message.length > 160
           message_array = message.scan(/.{1,152}/)
@@ -49,13 +47,13 @@ module PduSms
       dcs = DataCodingScheme.decode_ms(pdu_str)
       if dcs.alphabet_7bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_7bit(message)
+        message = Helpers.decode_7bit(message)
       elsif dcs.alphabet_8bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_8bit(message)
+        message = Helpers.decode_8bit(message)
       elsif dcs.alphabet_16bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_ucs2(message)
+        message = Helpers.decode_ucs2(message)
       else
         raise ArgumentError, 'The "pdu_str" is incorrect'
       end
@@ -79,13 +77,13 @@ module PduSms
       dcs = DataCodingScheme.decode_sc(pdu_str)
       if dcs.alphabet_7bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_7bit(message)
+        message = Helpers.decode_7bit(message)
       elsif dcs.alphabet_8bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_8bit(message)
+        message = Helpers.decode_8bit(message)
       elsif dcs.alphabet_16bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = decode_ucs2(message)
+        message = Helpers.decode_ucs2(message)
       else
         raise ArgumentError, 'The "pdu_str" is incorrect'
       end
@@ -176,11 +174,11 @@ module PduSms
     def get_hex
       message = case @coding
         when ALPHABET_7BIT
-          encode_7bit(@message)
+          Helpers.encode_7bit(@message)
         when ALPHABET_8BIT
-          encode_8bit(@message)
+          Helpers.encode_8bit(@message)
         when ALPHABET_16BIT
-          encode_ucs2(@message)
+          Helpers.encode_ucs2(@message)
       end
       '%s%s%s%s%s%s%s' % [get_udhl, get_iei, get_iedl, get_ied1, get_ied2, get_ied3, message]
     end

@@ -17,7 +17,6 @@ require 'pdu_sms/version'
 
 module PduSms
 
-  include Helpers
   ##
   # Type of number (TON):
   ID_UNKNOWN = 0b000                    # Unknown

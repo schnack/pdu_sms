@@ -4,5 +4,5 @@ require "bundler/setup"
 require "pdu_sms"
 require "irb"
 
-include PduSms
+#include PduSms
 IRB.start
