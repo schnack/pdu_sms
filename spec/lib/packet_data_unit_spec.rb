@@ -9,8 +9,19 @@ describe PacketDataUnit do
     before :each do
       @pdu = PacketDataUnit.encode_ms('+71234567890', 'test', coding:2)[0]
     end
-    it 'Проверяем объект класса ServiceCenterAddress' do
+    it 'Проверяем определение длины PDU' do
       expect(@pdu.length).to eq(21)
+    end
+    it 'Проверяем количество частей сообщения' do
+      expect(@pdu.id_message).to eq(0)
+      expect(@pdu.all_parts).to eq(0)
+      expect(@pdu.part_number).to eq(0)
+    end
+    it 'Проверяем количество частей сообщения' do
+      pdu = PacketDataUnit.encode_ms('+71234567890', 'm' * 180, coding:2)
+      expect(pdu[1].id_message).to be_an_instance_of(Fixnum)
+      expect(pdu[1].all_parts).to eq(3)
+      expect(pdu[1].part_number).to eq(2)
     end
     it 'Проверяем объект класса ServiceCenterAddress' do
       expect(@pdu.sca).to be_an_instance_of(ServiceCenterAddress)
