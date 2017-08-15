@@ -213,7 +213,7 @@ module PduSms
         when ALPHABET_8BIT
           raise ArgumentError, 'The message is too long'  unless (0..65535).include?(ied1)
         when ALPHABET_16BIT
-          raise ArgumentError, 'The message is too long'  unless (0..65535).include?(ied1)
+          raise ArgumentError, 'The message is too long'  unless (0..255).include?(ied1)
         else
           false
       end
