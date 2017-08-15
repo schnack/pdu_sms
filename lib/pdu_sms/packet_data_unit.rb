@@ -137,7 +137,7 @@ module PduSms
     end
 
     def id_message
-      @ud.get_ied1.to_i(16)
+      @ud.get_ied1.empty? ? nil : @ud.get_ied1.to_i(16)
     end
 
     def all_parts

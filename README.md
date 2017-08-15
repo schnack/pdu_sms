@@ -29,7 +29,7 @@ Or install it yourself as:
     encode_pdu_ms[0].get_message        #=> "Hello!!!"
     encode_pdu_ms[0].get_phone_number   #=> "+71234567890"
     encode_pdu_ms[0].length             #=> 20
-    encode_pdu_ms[0].id_message         #=> 0
+    encode_pdu_ms[0].id_message         #=> nil
     encode_pdu_ms[0].all_parts          #=> 0
     encode_pdu_ms[0].part_number        #=> 0
     

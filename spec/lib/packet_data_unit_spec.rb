@@ -13,7 +13,7 @@ describe PacketDataUnit do
       expect(@pdu.length).to eq(21)
     end
     it 'Проверяем количество частей сообщения' do
-      expect(@pdu.id_message).to eq(0)
+      expect(@pdu.id_message).to eq(nil)
       expect(@pdu.all_parts).to eq(0)
       expect(@pdu.part_number).to eq(0)
     end
