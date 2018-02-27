@@ -55,6 +55,28 @@ module PduSms
       text
     end
 
+    def self.decode_7bit_fill_bits(string, udhl)
+      message = ''
+      if udhl.to_i(16) == UDHL_SIZE_5
+        message << ("0%08b" % string[0..1].to_i(16))[0..-2].to_i(2).chr
+        message << self.decode_7bit(string[2..-1])
+      else
+        message << self.decode_7bit(string)
+      end
+      message
+    end
+
+    def self.encode_7bit_fill_bits(string, udhl)
+      message = ''
+      if udhl.to_i(16) == UDHL_SIZE_5
+        message << '%02X' % ('%07b0' % string[0].ord).to_i(2)
+        message << self.encode_7bit(string[1..-1])
+      else
+        message << self.encode_7bit(string)
+      end
+      message
+    end
+
     def self.encode_8bit(string)
       string.chars.to_a.collect {|char| '%02X' % char.ord }.join
     end
@@ -65,4 +87,5 @@ module PduSms
 
   end
 end
+
 

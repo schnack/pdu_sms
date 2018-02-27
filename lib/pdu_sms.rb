@@ -93,6 +93,9 @@ module PduSms
   STATUS_REPORT_INDICATION_0 = 0b0      # A status report will not be returned to the SME
   STATUS_REPORT_INDICATION_1 = 0b1      # A status report will be returned to the SME
 
+  UDHL_SIZE_5 = 0b0000101
+  UDHL_SIZE_6 = 0b0000110
+
 end
 
 

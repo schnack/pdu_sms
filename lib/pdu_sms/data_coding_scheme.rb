@@ -36,7 +36,7 @@ module PduSms
 
     def DataCodingScheme.decode_sc(pdu_str)
       pdu = '%08b' % DataCodingScheme.cut_off_pdu(pdu_str, :current, :sc).to_i(16)
-      message_class = (pdu[1].to_i == MESSAGE_CLASS_ON) ? pdu[6..7].to_i(2) : false
+      message_class = (pdu[3].to_i == MESSAGE_CLASS_ON) ? pdu[6..7].to_i(2) : false
       new(:decode_sc, compressed:pdu[2].to_i(2), message_class:message_class, alphabet:pdu[4..5].to_i(2)).freeze
     end
 

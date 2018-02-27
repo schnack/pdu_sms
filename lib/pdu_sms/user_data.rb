@@ -3,13 +3,13 @@ module PduSms
 
     def initialize(message, coding, ied1: false, ied2: false, ied3: false, udhl: false, iei: false, iedl: false)
       @coding = _check_coding coding
-      @message = _check_message message, coding, ied1
-      @ied1 = _check_ied1 ied1, coding
+      @ied1 = _check_ied1 ied1
       @ied2 = _check_ied2 ied2
       @ied3 = _check_ied3 ied3
-      @udhl = udhl ? udhl : _check_udhl(coding, ied1)
-      @iei = iei ? iei : _check_iei(coding, ied1)
-      @iedl = iedl ? iedl : _check_iedl(coding, ied1)
+      @udhl = udhl ? udhl : _check_udhl(ied1)
+      @iei = iei ? iei : _check_iei(ied1)
+      @iedl = iedl ? iedl : _check_iedl(ied1)
+      @message = _check_message message, coding, ied1
     end
 
     def UserData.encode_ms(message, coding=:auto)
@@ -18,21 +18,19 @@ module PduSms
       if coding == ALPHABET_7BIT
         if message.length > 160
           message_array = message.scan(/.{1,152}/)
-          ied1 = rand(65536)
         end
       elsif coding == ALPHABET_8BIT
         if message.length > 140
           message_array = message.scan(/.{1,133}/)
-          ied1 = rand(65536)
         end
       elsif coding == ALPHABET_16BIT
         if message.length > 70
           message_array = message.scan(/.{1,67}/)
-          ied1 = rand(256)
         end
       else
         raise ArgumentError, 'The "coding" is incorrect'
       end
+      ied1 = '%02X' % rand(255)
       message_array.collect.each_with_index do |mess, current_message|
         if message_array.length > 1
           new(mess, coding, ied1:ied1, ied2:message_array.length, ied3:current_message+1).freeze
@@ -47,7 +45,11 @@ module PduSms
       dcs = DataCodingScheme.decode_ms(pdu_str)
       if dcs.alphabet_7bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = Helpers.decode_7bit(message)
+        if header.empty?
+          message = Helpers.decode_7bit(message)
+        else
+          message = Helpers.decode_7bit_fill_bits(message, header[0..1])
+        end
       elsif dcs.alphabet_8bit?
         coding = dcs.get_alphabet.to_i(2)
         message = Helpers.decode_8bit(message)
@@ -60,10 +62,12 @@ module PduSms
       if header.empty?
         new(message, coding).freeze
       else
-        if header[4..5].to_i(16) == 4
-          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..9].to_i(16), ied2: header[10..11].to_i(16), ied3: header[12..13].to_i(16)).freeze
-        elsif header[4..5].to_i(16) == 3
-          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..7].to_i(16), ied2: header[8..9].to_i(16), ied3: header[10..11].to_i(16)).freeze
+        if header[0..1].to_i(16) == UDHL_SIZE_6
+          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..9], ied2: header[10..11].to_i(16), ied3: header[12..13].to_i(16)).freeze
+        elsif header[0..1].to_i(16) == UDHL_SIZE_5
+          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..7], ied2: header[8..9].to_i(16), ied3: header[10..11].to_i(16)).freeze
+        else
+          new(message, coding).freeze
         end
       end
     end
@@ -77,7 +81,11 @@ module PduSms
       dcs = DataCodingScheme.decode_sc(pdu_str)
       if dcs.alphabet_7bit?
         coding = dcs.get_alphabet.to_i(2)
-        message = Helpers.decode_7bit(message)
+        if header.empty?
+          message = Helpers.decode_7bit(message)
+        else
+          message = Helpers.decode_7bit_fill_bits(message, header[0..1])
+        end
       elsif dcs.alphabet_8bit?
         coding = dcs.get_alphabet.to_i(2)
         message = Helpers.decode_8bit(message)
@@ -90,10 +98,12 @@ module PduSms
       if header.empty?
         new(message, coding).freeze
       else
-        if header[4..5].to_i(16) == 4
-          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..9].to_i(16), ied2: header[10..11].to_i(16), ied3: header[12..13].to_i(16)).freeze
-        elsif header[4..5].to_i(16) == 3
-          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..7].to_i(16), ied2: header[8..9].to_i(16), ied3: header[10..11].to_i(16)).freeze
+        if header[0..1].to_i(16) == UDHL_SIZE_6
+          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..9], ied2: header[10..11].to_i(16), ied3: header[12..13].to_i(16)).freeze
+        elsif header[0..1].to_i(16) == UDHL_SIZE_5
+          new(message, coding, udhl: header[0..1].to_i(16), iei: header[2..3].to_i(16), iedl: header[4..5].to_i(16), ied1: header[6..7], ied2: header[8..9].to_i(16), ied3: header[10..11].to_i(16)).freeze
+        else
+          new(message, coding).freeze
         end
       end
     end
@@ -138,12 +148,7 @@ module PduSms
 
     def get_ied1
       return '' unless @ied1
-      case @coding
-        when ALPHABET_7BIT then '%04X' % @ied1
-        when ALPHABET_8BIT then '%04X' % @ied1
-        when ALPHABET_16BIT then '%02X' % @ied1
-        else raise 'unknown encoding'
-      end
+      @ied1
     end
 
     def get_ied2
@@ -172,13 +177,12 @@ module PduSms
     end
 
     def get_hex
-      message = case @coding
-        when ALPHABET_7BIT
-          Helpers.encode_7bit(@message)
-        when ALPHABET_8BIT
-          Helpers.encode_8bit(@message)
-        when ALPHABET_16BIT
-          Helpers.encode_ucs2(@message)
+      if @coding == ALPHABET_7BIT
+        message =Helpers.encode_7bit_fill_bits(@message, get_udhl)
+      elsif @coding == ALPHABET_8BIT
+        message =Helpers.encode_8bit(@message)
+      else
+        message =Helpers.encode_ucs2(@message)
       end
       '%s%s%s%s%s%s%s' % [get_udhl, get_iei, get_iedl, get_ied1, get_ied2, get_ied3, message]
     end
@@ -205,18 +209,9 @@ module PduSms
       coding
     end
 
-    def _check_ied1(ied1, coding)
+    def _check_ied1(ied1)
       return false unless ied1
-      case coding
-        when ALPHABET_7BIT
-          raise ArgumentError, 'The message is too long'  unless (0..65535).include?(ied1)
-        when ALPHABET_8BIT
-          raise ArgumentError, 'The message is too long'  unless (0..65535).include?(ied1)
-        when ALPHABET_16BIT
-          raise ArgumentError, 'The message is too long'  unless (0..255).include?(ied1)
-        else
-          false
-      end
+      raise ArgumentError, 'The message is too long'  unless (0..65535).include?(ied1.to_i(16))
       ied1
     end
 
@@ -230,45 +225,36 @@ module PduSms
       ied3
     end
 
-    def _check_udhl(coding, ied1)
+    def _check_udhl(ied1)
       return false unless ied1
-      case coding
-        when ALPHABET_7BIT
-          0x06
-        when ALPHABET_8BIT
-          0x06
-        when ALPHABET_16BIT
-          0x05
-        else
-          false
+      if ied1.length == 2
+        UDHL_SIZE_5
+      elsif ied1.length == 4
+        UDHL_SIZE_6
+      else
+        false
       end
     end
 
-    def _check_iei(coding, ied1)
+    def _check_iei(ied1)
       return false unless ied1
-      case coding
-        when ALPHABET_7BIT
-          0x08
-        when ALPHABET_8BIT
-          0x08
-        when ALPHABET_16BIT
-          0x00
-        else
-          false
+      if ied1.length == 2
+        0x00
+      elsif ied1.length == 4
+        0x08
+      else
+        false
       end
     end
 
-    def _check_iedl(coding, ied1)
+    def _check_iedl(ied1)
       return false unless ied1
-      case coding
-        when ALPHABET_7BIT
-          0x04
-        when ALPHABET_8BIT
-          0x04
-        when ALPHABET_16BIT
-          0x03
-        else
-          false
+      if ied1.length == 2
+        0x03
+      elsif ied1.length == 4
+        0x04
+      else
+        false
       end
     end
 

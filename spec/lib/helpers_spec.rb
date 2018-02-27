@@ -81,4 +81,16 @@ describe PduSms::Helpers do
     end
   end
 
+  describe '.decode_7bit_fill_bits' do
+    it 'Декодирование 7бит строки c битом заполнения' do
+      expect(Helpers.decode_7bit_fill_bits('A8E5391D', '05')).to eq('Test')
+    end
+  end
+
+  describe '.encode_7bit_fill_bits' do
+    it 'Кодирование 7бит строки c битом заполнения' do
+      expect(Helpers.encode_7bit_fill_bits('Test', '05')).to eq('A8E5391D')
+    end
+  end
+
 end
