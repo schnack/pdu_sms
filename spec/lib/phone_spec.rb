@@ -47,6 +47,10 @@ describe Phone do
     it 'Не корректный номер телефона' do
       expect(@phone.send(:_check_phone?)).to be_falsey
     end
+    it 'Правильный номер текстовый' do
+      @phone.send(:_set_phone_number, 'tele2 SP', ID_ALPHANUMERIC, TP_ISDN)
+      expect(@phone.send(:_check_phone?)).to be_truthy
+    end
   end
 
   describe '._get_hex_type_and_phone' do
