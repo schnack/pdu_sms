@@ -17,7 +17,8 @@ module PduSms
       coding = Helpers.is_7bit?(message) ? ALPHABET_7BIT : ALPHABET_16BIT if coding == :auto
       if coding == ALPHABET_7BIT
         if message.length > 160
-          message_array = message.scan(/.{1,152}/)
+          #TODO ide 00  - 153   ied 0000 - 152
+          message_array = message.scan(/.{1,153}/)
         end
       elsif coding == ALPHABET_8BIT
         if message.length > 140
