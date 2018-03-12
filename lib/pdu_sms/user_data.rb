@@ -193,7 +193,7 @@ module PduSms
       raise ArgumentError, 'The "coding" is incorrect' unless message.class == String and message.encoding.to_s == 'UTF-8'
       case coding
         when ALPHABET_7BIT
-          raise ArgumentError, 'The message is too long' if (ied1 and message.length > 152) or message.length > 160
+          raise ArgumentError, 'The message is too long' if (ied1 and message.length > 153) or message.length > 160
         when ALPHABET_8BIT
           raise ArgumentError, 'The message is too long' if (ied1 and message.length > 133) or message.length > 140
         when ALPHABET_16BIT
