@@ -178,11 +178,11 @@ module PduSms
 
     def get_hex
       if @coding == ALPHABET_7BIT
-        message =Helpers.encode_7bit_fill_bits(@message, get_udhl)
+        message = Helpers.encode_7bit_fill_bits(@message, get_udhl)
       elsif @coding == ALPHABET_8BIT
-        message =Helpers.encode_8bit(@message)
+        message = Helpers.encode_8bit(@message)
       else
-        message =Helpers.encode_ucs2(@message)
+        message = Helpers.encode_ucs2(@message)
       end
       '%s%s%s%s%s%s%s' % [get_udhl, get_iei, get_iedl, get_ied1, get_ied2, get_ied3, message]
     end
@@ -193,7 +193,7 @@ module PduSms
       raise ArgumentError, 'The "coding" is incorrect' unless message.class == String and message.encoding.to_s == 'UTF-8'
       case coding
         when ALPHABET_7BIT
-          raise ArgumentError, 'The message is too long' if (ied1 and message.length > 153) or message.length > 160
+          raise ArgumentError, 'The message is too long' if (ied1 and ied1.length == 2 and message.length > 153) or (ied1 and ied1.length == 4 and message.length > 152) or message.length > 160
         when ALPHABET_8BIT
           raise ArgumentError, 'The message is too long' if (ied1 and message.length > 133) or message.length > 140
         when ALPHABET_16BIT

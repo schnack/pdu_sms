@@ -16,9 +16,10 @@ describe UserData do
       expect(-> { @ud.send(:_check_message, '1234567890'*8, ALPHABET_16BIT) } ).to raise_exception ArgumentError
     end
     it 'Ошибка сообщение слишком длинное для нескольких смс' do
-      expect(-> { @ud.send(:_check_message, '1234567890'*16, ALPHABET_7BIT, 1) } ).to raise_exception ArgumentError
-      expect(-> { @ud.send(:_check_message, '1234567890'*14, ALPHABET_8BIT, 1) } ).to raise_exception ArgumentError
-      expect(-> { @ud.send(:_check_message, '1234567890'*7, ALPHABET_16BIT, 1) } ).to raise_exception ArgumentError
+      expect(-> { @ud.send(:_check_message, '1234567890'*16, ALPHABET_7BIT, 'CE') } ).to raise_exception ArgumentError
+      expect(-> { @ud.send(:_check_message, '123' + '1234567890'*15, ALPHABET_7BIT, 'CEEE') } ).to raise_exception ArgumentError
+      expect(-> { @ud.send(:_check_message, '1234567890'*14, ALPHABET_8BIT, 'CE') } ).to raise_exception ArgumentError
+      expect(-> { @ud.send(:_check_message, '1234567890'*7, ALPHABET_16BIT, 'CE') } ).to raise_exception ArgumentError
     end
     it 'Ошибка не корректная кодировка' do
       expect(-> { @ud.send(:_check_message, '1234567890', -1, 1) } ).to raise_exception ArgumentError
@@ -27,9 +28,10 @@ describe UserData do
       expect(@ud.send(:_check_message, '1234567890', ALPHABET_7BIT)).to eq('1234567890')
       expect(@ud.send(:_check_message, '1234567890', ALPHABET_8BIT)).to eq('1234567890')
       expect(@ud.send(:_check_message, '1234567890', ALPHABET_16BIT)).to eq('1234567890')
-      expect(@ud.send(:_check_message, '1234567890', ALPHABET_7BIT, 1)).to eq('1234567890')
-      expect(@ud.send(:_check_message, '1234567890', ALPHABET_8BIT, 1)).to eq('1234567890')
-      expect(@ud.send(:_check_message, '1234567890', ALPHABET_16BIT, 1)).to eq('1234567890')
+      expect(@ud.send(:_check_message, '1234567890', ALPHABET_7BIT, 'CE')).to eq('1234567890')
+      expect(@ud.send(:_check_message, '1234567890', ALPHABET_7BIT, 'CEEE')).to eq('1234567890')
+      expect(@ud.send(:_check_message, '1234567890', ALPHABET_8BIT, 'CE')).to eq('1234567890')
+      expect(@ud.send(:_check_message, '1234567890', ALPHABET_16BIT, 'CE')).to eq('1234567890')
     end
   end
 
