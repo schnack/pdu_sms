@@ -17,21 +17,23 @@ module PduSms
       coding = Helpers.is_7bit?(message) ? ALPHABET_7BIT : ALPHABET_16BIT if coding == :auto
       if coding == ALPHABET_7BIT
         if message.length > 160
-          #TODO ide 00  - 153   ied 0000 - 152
-          message_array = message.scan(/.{1,153}/)
+          message_array = message.scan(/.{1,152}/)
+          ied1 = '%04X' % rand(65535)
         end
       elsif coding == ALPHABET_8BIT
         if message.length > 140
           message_array = message.scan(/.{1,133}/)
+          ied1 = '%04X' % rand(65535)
         end
       elsif coding == ALPHABET_16BIT
         if message.length > 70
           message_array = message.scan(/.{1,67}/)
+          ied1 = '%02X' % rand(255)
         end
       else
         raise ArgumentError, 'The "coding" is incorrect'
       end
-      ied1 = '%02X' % rand(255)
+
       message_array.collect.each_with_index do |mess, current_message|
         if message_array.length > 1
           new(mess, coding, ied1:ied1, ied2:message_array.length, ied3:current_message+1).freeze
