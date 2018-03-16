@@ -23,7 +23,11 @@ module PduSms
     end
 
     def self.is_7bit?(message)
-      /^[A-Za-z0-9\@£\$¥èéùìòÇØøÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ\!\"#¤\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?¡¿ÄÖÑÜ§äöñüà\^\{\}\\\[~\]\|€ ]*$/ === message
+      result = true
+      message.split('').each do |sym|
+        result = false unless sym.ord >= 0 and sym.ord <= 127
+      end
+      result
     end
 
     def self.encode_7bit(string)
