@@ -61,7 +61,7 @@ module PduSms
     def _absolute_pdu(vp)
       ss = Helpers.decode_bcd(vp)
       year, month, day, hours, minutes, seconds, zone_quarter = Time.now.year.to_s[0..1] + ss[0..1], ss[2..3], ss[4..5], ss[6..7], ss[8..9], ss[10..11], ss[12..13]
-      tz = '%08b' % zone_quarter
+      tz = '%08b' % zone_quarter.to_i()
       if tz[0] == '1'
         tz[0] = ?0
         zone = '-'
