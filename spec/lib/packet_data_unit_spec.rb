@@ -19,7 +19,7 @@ describe PacketDataUnit do
     end
     it 'Проверяем количество частей сообщения' do
       pdu = PacketDataUnit.encode_ms('+71234567890', 'm' * 180, coding:2)
-      expect(pdu[1].id_message).to be_an_instance_of(Fixnum)
+      expect(pdu[1].id_message).to be_an_instance_of(Integer)
       expect(pdu[1].all_parts).to eq(3)
       expect(pdu[1].part_number).to eq(2)
     end
